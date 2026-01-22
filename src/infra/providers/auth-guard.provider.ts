@@ -20,8 +20,9 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: 'NESTJS_CURSO',
+        secret: process.env.SECRET_JWT,
       });
+      request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
     }
