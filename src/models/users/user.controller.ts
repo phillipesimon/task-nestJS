@@ -38,14 +38,14 @@ export class UserController {
   }
 
   @Get('/profile')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   async profile(@Request() req) {
     return this.profileUserUseCase.execute(req.user.sub);
   }
 
   @Put('/avatar')
   @UseInterceptors(FileInterceptor('file'))
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   async uploadAvatar(@Request() req, @UploadedFile() file: FileDTO) {
     const result = await this.uploadAvatarUserUseCase.execute({
       file,
