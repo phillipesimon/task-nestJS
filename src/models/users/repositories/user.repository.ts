@@ -1,12 +1,12 @@
 import {
   CreateUserDTO,
   UserCreatedDTO,
-  UsernameAndEmail,
+  UsernameAndEmailDTO,
 } from '../dto/user.dto';
 
 export abstract class IUserRepository {
   abstract findByUsernameOrEmail(
-    data: UsernameAndEmail,
+    data: UsernameAndEmailDTO,
   ): Promise<UserCreatedDTO | null>;
   abstract save(data: CreateUserDTO): Promise<UserCreatedDTO>;
   abstract findByUsername(data: string): Promise<UserCreatedDTO | null>;

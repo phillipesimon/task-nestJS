@@ -1,6 +1,6 @@
 import { PrismaService } from 'src/infra/database/prisma.service';
 import {
-  UsernameAndEmail,
+  UsernameAndEmailDTO,
   UserCreatedDTO,
   CreateUserDTO,
 } from '../../dto/user.dto';
@@ -11,7 +11,7 @@ import { Injectable } from '@nestjs/common';
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaService) {}
   async findByUsernameOrEmail(
-    data: UsernameAndEmail,
+    data: UsernameAndEmailDTO,
   ): Promise<UserCreatedDTO | null> {
     return await this.prisma.user.findFirst({
       where: {

@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import {
   CreateUserDTO,
   UserCreatedDTO,
-  UsernameAndEmail,
+  UsernameAndEmailDTO,
 } from '../../dto/user.dto';
 import { IUserRepository } from '../user.repository';
 
@@ -10,7 +10,7 @@ export class UserInMemoryRepository implements IUserRepository {
   users: UserCreatedDTO[] = [];
 
   async findByUsernameOrEmail(
-    data: UsernameAndEmail,
+    data: UsernameAndEmailDTO,
   ): Promise<UserCreatedDTO | null> {
     const findUser = this.users.find(
       (user) => user.username === data.username || user.email === data.email,

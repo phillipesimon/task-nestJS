@@ -10,7 +10,7 @@ export type UserCreatedDTO = {
   createdAt: Date;
 } & CreateUserDTO;
 
-export type UsernameAndEmail = {
+export type UsernameAndEmailDTO = {
   username: string;
   email: string;
 };

@@ -45,7 +45,7 @@ export class UserController {
 
   @Put('/avatar')
   @UseInterceptors(FileInterceptor('file'))
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async uploadAvatar(@Request() req, @UploadedFile() file: FileDTO) {
     const result = await this.uploadAvatarUserUseCase.execute({
       file,
