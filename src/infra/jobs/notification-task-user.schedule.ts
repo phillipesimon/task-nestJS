@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { ITaskUserRepository } from 'src/models/tasks/repositories/task-user.repository';
 
 @Injectable()
 export class NotificationTaskUserSchedule {
-  @Cron(CronExpression.EVERY_5_SECONDS)
-  getAllTasksDay() {
-    console.log('Tasks OK!' + new Date());
+  constructor(private taskRepository: ITaskUserRepository) {}
+
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  async getAllTasksDay() {
+    const allTasks = await this.taskRepository.findAllStartDay();
+    console.log(allTasks);
   }
 }
