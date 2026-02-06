@@ -11,7 +11,7 @@ import { UserPrismaRepository } from '../users/repositories/prisma/user.prisma.r
     JwtModule.register({
       global: true,
       secret: 'NESTJS_CURSO',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '240s' },
     }),
   ],
   controllers: [LoginController],
