@@ -16,11 +16,13 @@ import { AuthGuard } from 'src/infra/providers/auth-guard.provider';
 import { ProfileUserUseCase } from './useCases/profile-user.usecase';
 import {
   CreateUserResponseSchemaDTO,
+  CreateUserSchema,
   CreateUserSchemaDTO,
 } from './schemas/create-user.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from './dto/user.dto';
 import { UploadAvatarUserUseCase } from './useCases/upload-avatar-user.usecase';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/users')
 export class UserController {
@@ -31,14 +33,20 @@ export class UserController {
   ) {}
 
   @Post()
-  @UsePipes(new CreateUserValidationPipe())
+  @ApiBody({
+    description: 'Criação de usuário',
+    type: CreateUserSchemaDTO,
+  })
+  @ApiResponse({ status: 201, description: 'Usuário cadastrado com sucesso' })
+  @ApiResponse({ status: 400, description: 'User Already exists' })
+  // @UsePipes(new CreateUserValidationPipe())
   async create(@Body() data: CreateUserSchemaDTO) {
     const user = await this.createUserUseCase.execute(data);
     return CreateUserResponseSchemaDTO.parse(user);
   }
 
   @Get('/profile')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async profile(@Request() req) {
     return this.profileUserUseCase.execute(req.user.sub);
   }
