@@ -22,7 +22,13 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from './dto/user.dto';
 import { UploadAvatarUserUseCase } from './useCases/upload-avatar-user.usecase';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('/users')
 export class UserController {
@@ -55,6 +61,19 @@ export class UserController {
   @Put('/avatar')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   async uploadAvatar(@Request() req, @UploadedFile() file: FileDTO) {
     const result = await this.uploadAvatarUserUseCase.execute({
       file,
