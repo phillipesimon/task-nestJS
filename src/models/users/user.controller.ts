@@ -22,7 +22,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileDTO } from './dto/user.dto';
 import { UploadAvatarUserUseCase } from './useCases/upload-avatar-user.usecase';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/users')
 export class UserController {
@@ -47,6 +47,7 @@ export class UserController {
 
   @Get('/profile')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   async profile(@Request() req) {
     return this.profileUserUseCase.execute(req.user.sub);
   }
