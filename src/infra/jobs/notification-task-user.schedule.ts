@@ -18,7 +18,7 @@ export class NotificationTaskUserSchedule {
     @Inject('NOTIFICATION') private readonly notificationClient: ClientProxy,
   ) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_12_HOURS)
   async getAllTasksDay() {
     const allTasks = await this.taskRepository.findAllStartDay();
     console.log('=== NOTIFICANDO ===');
@@ -33,6 +33,7 @@ export class NotificationTaskUserSchedule {
           startAt: task.task.startAt,
           endAt: task.task.endAt,
         };
+        console.log(`=== ENVIANDO NOTIFICATION ==== `);
         this.notificationClient.emit('task_notification', message);
       });
     }
